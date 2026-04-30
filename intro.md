@@ -5,7 +5,7 @@
 ## Why Does Any of This Matter?
 
 > Why can your computer open a 500MB PDF in seconds? Why can a search engine find results from billions of pages almost instantly?
-> The answer lies in how data is **organized and managed in memory** — and that's exactly what Data Structures & Algorithms is about.
+> The answer lies in how data is **organized and managed in memory**  and that's exactly what Data Structures & Algorithms is about.
 
 ---
 
@@ -15,7 +15,7 @@
 
 ### Real-World Analogy
 
-Let's assume we have to access a file named `dsa.pdf`. When we double-click on the file to open it, the file is copied from disk to the main memory — and the management of data on that main memory is **data structure**.
+Let's assume we have to access a file named `dsa.pdf`. When we double-click on the file to open it, the file is copied from disk to the main memory  and the management of data on that main memory is **data structure**.
 
 > The management of data on the **disk** is called a **database**.
 
@@ -25,7 +25,7 @@ Let's assume we have to access a file named `dsa.pdf`. When we double-click on t
 
 ### Data Warehouse
 
-We store large amounts of old data across multiple disks (an array of disks) — this storage is called a **data warehouse**. That data is very helpful for generating insights by analyzing it, and the algorithms written to analyze them are called **data mining algorithms**.
+We store large amounts of old data across multiple disks (an array of disks)  this storage is called a **data warehouse**. That data is very helpful for generating insights by analyzing it, and the algorithms written to analyze them are called **data mining algorithms**.
 
 ### Big Data
 
@@ -37,13 +37,13 @@ With the boom of the internet, large amounts of data are being generated day by 
 
 > How does your program actually use RAM? Why do some variables disappear after a function ends, but others stick around?
 
-Stack and heap are both parts of memory — **stack is static memory** whereas **heap is dynamic memory**.
+Stack and heap are both parts of memory  **stack is static memory** whereas **heap is dynamic memory**.
 
 ---
 
 ### 3.1 Static Memory Allocation (Stack)
 
-First, we need to know that memory is divided into different parts — this is called **segmentation of memory**, and each segment has a maximum of **64KB** of storage.
+First, we need to know that memory is divided into different parts this is called **segmentation of memory**, and each segment has a maximum of **64KB** of storage.
 
 A segment is further divided into three parts:
 - **Code section**
@@ -66,7 +66,7 @@ void main() {
 ```
 
 - Assume `int` = 2 bytes, `float` = 4 bytes → total **6 bytes** needed.
-- This memory is allocated in the **stack** for the function — this block is called an **activation record** or **stack frame**.
+- This memory is allocated in the **stack** for the function this block is called an **activation record** or **stack frame**.
 - Since the amount of memory required is determined at **compile time**, this is called **static memory allocation**.
 
 #### Example — Multiple Function Calls
@@ -105,11 +105,11 @@ void main() {
 
 ### 3.2 Dynamic Memory Allocation (Heap)
 
-> **Heap** means *piling up*. It should be treated as a **resource** — we use it when needed and release it when our work is done.
+> **Heap** means *piling up*. It should be treated as a **resource** we use it when needed and release it when our work is done.
 
 Key differences from stack:
 - A program can access **stack memory directly**.
-- A program **cannot access heap memory directly** — we access it using a **pointer**.
+- A program **cannot access heap memory directly** we access it using a **pointer**.
 
 #### Example — Heap Allocation
 
@@ -117,13 +117,13 @@ Key differences from stack:
 void main() {
     int *p;            // Assume pointer is 2 bytes — memory auto-allocated in stack
     p = new int[5];    // "new" allocates memory for 5 ints in the heap;
-                       // p stores the starting address of the array
-    delete[] p;        // After work is done, we MUST delete heap memory to avoid memory loss
+                       // p stores the starting address of the array(which on the heap)
+    delete[] p;        // After work is done, we must delete heap memory to avoid memory loss
     p = NULL;          // Now p points to nothing
 }
 ```
 
-> ⚠️ Failing to call `delete[]` after using `new` causes a **memory leak** — heap memory stays reserved even after the program no longer needs it.
+> Failing to call `delete[]` after using `new` causes a **memory leak** — heap memory stays reserved even after the program no longer needs it.
 
 ---
 
@@ -144,7 +144,7 @@ There are **2 types** of data structures:
 - Can be created in **stack or heap**.
 
 #### Linked List
-- A dynamic data structure — it is basically a **dynamic structure**.
+- It is basically a **dynamic structure**.
 - A collection of **nodes**, where each node contains **data** and a **link to the next node**.
 - The length of the list can be **increased or reduced dynamically**.
 - The linked list itself is created in **heap**, and a **head pointer** in the stack points to the heap.
@@ -160,8 +160,6 @@ There are **2 types** of data structures:
 | Trees | Non-linear |
 | Graphs | Non-linear |
 | Hash Table | Linear / Tabular |
-
-> 📝 Note: The original notes say "Hash tree" but the correct term is **Hash Table** (also called a hash map). A hash table is a tabular data structure that maps keys to values. "Hash tree" is a different, less common structure.
 
 **Physical vs Logical — How they relate:**
 
@@ -190,7 +188,7 @@ To represent this list we need:
 - Space for storing elements
 - A capacity
 
-We can represent this list using **either an array or a linked list** — the internal representation is hidden from the user. That's the "abstract" part.
+We can represent this list using **either an array or a linked list** the internal representation is hidden from the user. That's the "abstract" part.
 
 ---
 
@@ -252,7 +250,7 @@ Output → 2   (returns the index)
 - **Data warehouse** stores large amounts of historical data; **data mining algorithms** extract insights from it.
 - **Big data** refers to data volumes too large for traditional databases to handle.
 - **Stack memory** is static — size determined at compile time, managed automatically via activation records (LIFO).
-- **Heap memory** is dynamic — accessed via **pointers**, must be manually released with `delete[]` to avoid memory leaks.
+- **Heap memory** is dynamic  accessed via **pointers**, must be manually released with `delete[]` to avoid memory leaks.
 - **Physical data structures** (`array`, `linked list`) define *how* data is stored.
 - **Logical data structures** (`stack`, `queue`, `tree`, `graph`, `hash table`) define *how* data is operated on.
 - **ADT (Abstract Data Type)** hides implementation details — defined only by its data representation and the operations it supports.
