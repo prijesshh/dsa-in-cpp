@@ -99,7 +99,7 @@ void main() {
 7. `func1()` finishes → its activation record is **deleted**, control returns to `main()`.
 8. `main()` finishes → its activation record is also **deleted**.
 
-> 📝 **Key takeaway:** Stack works on a **LIFO (Last In, First Out)** mechanism. The size of stack memory is decided by the **compiler automatically**, and it is also **deleted automatically**.
+>  **Key takeaway:** Stack works on a **LIFO (Last In, First Out)** mechanism. The size of stack memory is decided by the **compiler automatically**, and it is also **deleted automatically**.
 
 ---
 
@@ -244,7 +244,7 @@ Output → 2   (returns the index)
 
 ---
 
-## 📚 Quick Recap
+## Quick Recap
 
 - **Data structure** = managing data in **main memory**; **database** = managing data on **disk**.
 - **Data warehouse** stores large amounts of historical data; **data mining algorithms** extract insights from it.
