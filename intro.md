@@ -257,3 +257,214 @@ Output → 2   (returns the index)
 - A **List ADT** supports: `add`, `insert`, `remove`, `set`, `get`, `search`, and `sort`.
 
 ---
+# 6. Time and Space Complexity
+
+---
+
+> Why does the same task  say, searching a list  feel instant with 10 items but sluggish with 10 million?
+> The answer is **time complexity** and understanding it lets you predict, measure, and improve the efficiency of any algorithm before writing a single line of production code.
+
+---
+
+## 6.1 Time Complexity
+
+**Time complexity** means how much time is required to complete a task, and it depends on the **procedure** (the steps the algorithm follows).
+
+We can analyze time complexity in two ways:
+- By analyzing the **procedure / logic**
+- By analyzing the **code**
+
+---
+
+## 6.2 Analyzing Time Complexity by Procedure
+
+### O(n) — Linear Time
+
+Take an array of `n` elements. If we have to search through it, we have to go through every element so the time complexity is **order of n**, written as **O(n)**.
+
+---
+
+### O(n²) — Quadratic Time
+
+Imagine an array of `n` elements. When we are at index `0`, we process from index `0` to `n-1`. When we are at index `1`, we process from `1` to `n-1`. We continue this until we reach index `n-1`.
+
+So the total work done is:
+
+```
+(n-1) + (n-2) + ... + 3 + 2 + 1
+```
+
+> Note:  The sum 1 + 2 + ... + (n-1) = n(n-1)/2.
+
+This gives us a degree-2 polynomial → **Time complexity: O(n²)**
+
+In code, this corresponds to a **nested loop**:
+
+```c
+for (i = 0; i < n; i++) {
+    for (j = i + 1; j < n; j++) {
+        // process
+    }
+}
+```
+
+---
+
+### O(log n) — Logarithmic Time
+
+Imagine we are processing an array of `n` elements, and each time we only process up to the **midpoint**, then the midpoint of that, and so on repeating until only index `0` is left.
+
+The work done halves each time:
+
+```
+n → n/2 → n/4 → ... → 1
+```
+
+**Time complexity: O(log₂ n)**
+
+In code:
+
+```c
+for (i = n; i > 1; i = i/2) { }
+```
+
+Or equivalently:
+
+```c
+i = n;
+while (i > 1) {
+    i = i / 2;
+}
+```
+
+---
+
+### Matrix Cases
+
+| Scenario | Time Complexity |
+|---|---|
+| Processing an entire matrix | O(n²) |
+| Processing only a single row or column | O(n) |
+
+---
+
+### O(m + n) — Mixed Structures
+
+For an array of linked lists where there are `m` array slots and `n` nodes in each linked list:
+
+- If we traverse **everything** (array + all linked lists): **O(m + n)**
+- If we only traverse the **linked lists**: **O(n)**
+
+---
+
+## 6.3 Analyzing Time Complexity by Code
+
+We assume every **simple statement** takes **unit time (1)**.
+
+Simple statements include:
+- Arithmetic operations
+- Assignment operations
+- Conditional operations
+
+---
+
+### Example 1 — Swap Function → O(1)
+
+```c
+void swap(int x, int y) {
+    int t;  // 1
+    t = x;  // 1
+    t = y;  // 1
+    y = t;  // 1
+}
+```
+
+- Time function: **f(n) = 4** → degree = 0
+- **Time complexity: O(1)** (constant — doesn't depend on input size)
+
+---
+
+### Example 2 — Sum Function → O(n)
+
+```c
+int sum(int a[], int n) {
+    int s, i;
+    for (i = 0; i < n; i++) {  // loop runs n+1 times (includes final condition check)
+        s = s + a[i];
+    }
+    return s;  // 1
+}
+```
+
+
+- The `for` loop condition is checked `n+1` times, body runs `n` times.
+- **Time complexity: O(n)**
+
+---
+
+### Example 3 — Matrix Addition → O(n²)
+
+```c
+for (i = 0; i < n; i++) {         // n+1 times
+    for (j = 0; j < n; j++) {     // (n+1) * n times
+        m[i][j] = a[i][j] + b[i][j];  // n * n times
+    }
+}
+```
+
+- Outer loop: `n+1` checks
+- Inner loop: runs `n` times for each outer iteration → `n × n = n²`
+- **Time complexity: O(n²)**
+
+---
+
+### Example 4 — Function Call → O(n)
+
+```c
+func1() {
+    for (i = 0; i < n; i++) { }
+}
+
+main() {
+    func1();
+}
+```
+
+- `main()` calls `func1()`, which runs a loop of `n` iterations.
+- **Time complexity: O(n)**
+
+---
+
+## 6.4 Space Complexity
+
+**Space complexity** is concerned with the **space (memory) required to store elements**.
+
+Key point:
+- It does **not** calculate the exact memory size in bytes.
+- It only calculates the **number of units of space** used relative to input size.
+
+### Example
+
+- For an array of `n` elements → **Space complexity: O(n)**
+- For a fixed number of variables regardless of input → **Space complexity: O(1)**
+
+---
+
+##  Quick Recap
+
+- **Time complexity** measures how an algorithm's running time grows with input size — it depends on the procedure used.
+- We can derive it by analyzing the **logic** (procedure) or by counting **statement executions** in code.
+- Every simple statement (arithmetic, assignment, conditional) is assumed to take **1 unit of time**.
+- Common complexities from best to worst:
+
+  | Complexity | Name | Example |
+  |---|---|---|
+  | O(1) | Constant | Swap two variables |
+  | O(log n) | Logarithmic | Halving an array repeatedly |
+  | O(n) | Linear | Searching an array |
+  | O(n²) | Quadratic | Nested loops over an array |
+
+- **Space complexity** measures how much storage space an algorithm uses relative to input size — it counts **units of space**, not bytes.
+- For an array of `n` elements, space complexity is **O(n)**.
+
+---
