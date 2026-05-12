@@ -1,151 +1,139 @@
 # 8. Recursion
 
--- -
+---
 
-    > What if a function could solve a problem by solving a smaller version of *the same problem *
-    ? > That 's the idea behind **recursion** — and it' s one of the most elegant(and tricky) tools in programming.
+> What if a function could solve a problem by solving a smaller version of *the same problem*?
+> That's the idea behind **recursion** — and it's one of the most elegant (and tricky) tools in programming.
 
-              -- -
+---
 
-              ##8.1 What is Recursion
-          ?
+## 8.1 What is Recursion?
 
-          **A function calling itself is called a recursive function.**
+**A function calling itself is called a recursive function.**
 
-                                                                      Two rules every recursive function must follow
-          : -It must **call itself **(with a smaller / simpler input).- There must be some **base condition that terminates the recursion ** — otherwise it runs forever.
+Two rules every recursive function must follow:
+- It must **call itself** (with a smaller/simpler input).
+- There must be some **base condition that terminates the recursion** — otherwise it runs forever.
 
-                                                                        ## #General Structure
+### General Structure
 
 ```c
-                                                                        type fun(parameter)
-{
-    if (base condition)
-    {
-        fun(parameter); // recursive call
+type fun(parameter) {
+    if (base condition) {
+        fun(parameter);   // recursive call
     }
 }
 ```
 
-    -- -
+---
 
-    ##8.2 Example 1 — Printing in Descending Order
+## 8.2 Example 1 — Printing in Descending Order
 
-```c void
-    fun(int n)
-{
-    if (n > 0)
-    {
+```c
+void fun(int n) {
+    if (n > 0) {
         cout << n;
         fun(n - 1);
     }
 }
 
-void main()
-{
+void main() {
     int n = 3;
     fun(n);
 }
 ```
 
-    **Execution trace : **
+**Execution trace:**
 
-                        - `main` calls `fun(3)` → prints `3`,
-                        calls `fun(2)` - `fun(2)` → prints `2`,
-                        calls `fun(1)` - `fun(1)` → prints `1`,
-                        calls `fun(0)` - `fun(0)` → base condition `n > 0` is false → * * terminates * *
+- `main` calls `fun(3)` → prints `3`, calls `fun(2)`
+- `fun(2)` → prints `2`, calls `fun(1)`
+- `fun(1)` → prints `1`, calls `fun(0)`
+- `fun(0)` → base condition `n > 0` is false → **terminates**
 
-                                                                                                       **Output : `3 2 1`**
+**Output: `3 2 1`**
 
-                            > We can trace a * * tree * *of any recursive function to understand its execution.
+> We can trace a **tree** of any recursive function to understand its execution.
 
-                                                         -- -
+---
 
-                                                         ##8.3 Example 2 — Printing in Ascending Order
+## 8.3 Example 2 — Printing in Ascending Order
 
-```c void fun2(int n)
-{
-    if (n > 0)
-    {
-        fun2(n - 1); // recursive call FIRST
-        cout << n;   // print AFTER returning
+```c
+void fun2(int n) {
+    if (n > 0) {
+        fun2(n - 1);   // recursive call FIRST
+        cout << n;     // print AFTER returning
     }
 }
 
-void main()
-{
+void main() {
     int n = 3;
     fun2(n);
 }
 ```
 
-            **Recursion tree : **
+**Recursion tree:**
 
-``` fun2(3) /
-                               fun2(2)       ↑ 3 /
-                               fun2(1)    ↑ 2 /
-                               fun2(0)  ↑ 1 |
-    terminate
+```
+        fun2(3)
+       /        \
+   fun2(2)       ↑ 3
+   /      \
+fun2(1)    ↑ 2
+  /    \
+fun2(0)  ↑ 1
+  |
+terminate
 ```
 
-            **Output : `1 2 3`**
+**Output: `1 2 3`**
 
-    > Notice how swapping the order of the `cout` and the recursive call **reverses the output ** — this is a key insight into how recursion works.
+> Notice how swapping the order of the `cout` and the recursive call **reverses the output** — this is a key insight into how recursion works.
 
-      -- -
+---
 
-      ##8.4 The Two Phases of Recursion
+## 8.4 The Two Phases of Recursion
 
-          **Recursion has 2 phases : **
+**Recursion has 2 phases:**
 
 ```c
-                                     void func(param)
-{
+void func(param) {
     // ... → this is the CALLING PHASE (ascending phase)
     {
-        func(param); // recursive call
+        func(param);   // recursive call
         // ... → this is the RETURNING PHASE (descending phase)
     }
 }
 ```
 
-        | Phase | Also Called | When it happens |
-        | -- -| -- -| -- -|
-        | Calling phase | Ascending phase | As function calls are being made deeper |
-        | Returning phase | Descending phase | As functions finish and return back up |
+| Phase | Also Called | When it happens |
+|---|---|---|
+| Calling phase | Ascending phase | As function calls are being made deeper |
+| Returning phase | Descending phase | As functions finish and return back up |
 
-        ## #Recursion vs Loop — What's the Difference?
+### Recursion vs Loop — What's the Difference?
 
-        Both recursion and
-    loops execute something repeatedly.So what's different?
+Both recursion and loops execute something repeatedly. So what's different?
 
-        > **→ Recursion has both an ascending phase and a descending phase,
-    but a loop does not.**
+> **→ Recursion has both an ascending phase and a descending phase, but a loop does not.**
 
-                         A loop only goes forward — it has no "returning" phase.Recursion can perform work both on the way *
-            *down * *(calling phase) and
-        on the way * *back up * *(returning phase),
-    which is why it can produce behaviors a simple loop cannot.
+A loop only goes forward — it has no "returning" phase. Recursion can perform work both on the way **down** (calling phase) and on the way **back up** (returning phase), which is why it can produce behaviors a simple loop cannot.
 
-        -- -
+---
 
-        ##8.5 How Recursion Uses the Stack
+## 8.5 How Recursion Uses the Stack
 
-        > How does the computer actually * manage * all those recursive calls
-    ?
+> How does the computer actually *manage* all those recursive calls?
 
-```c void
-    fun2(int n)
-{
-    if (n > 0)
-    {
+```c
+void fun2(int n) {
+    if (n > 0) {
         fun2(n - 1);
         cout << n;
     }
 }
 
-void main()
-{
+void main() {
     int n = 3;
     func2(n);
 }
@@ -200,9 +188,9 @@ When this runs, here is what the **memory** looks like:
 - A **recursive function** is one that calls itself.
 - Every recursive function needs a **base condition** to terminate — without it, you get infinite recursion (stack overflow).
 - Swapping the position of the recursive call vs. the work (e.g., `cout`) **changes the output order** — this is the calling vs. returning phase at work.
-- **Recursion has two phases:
-**calling(ascending)
-phase and returning(descending) phase.A loop only has a forward phase.- Recursion uses the **call stack ** — each recursive call creates an activation record on the stack.- A recursive function called `n + 1` times uses **O(n)
-space **on the stack — making recursive functions **memory consuming **.- The time complexity of a recursive function is analyzed using a **recurrence relation **.
+- **Recursion has two phases:** calling (ascending) phase and returning (descending) phase. A loop only has a forward phase.
+- Recursion uses the **call stack** — each recursive call creates an activation record on the stack.
+- A recursive function called `n+1` times uses **O(n) space** on the stack — making recursive functions **memory consuming**.
+- The time complexity of a recursive function is analyzed using a **recurrence relation**.
 
-                                                                          -- -
+---
