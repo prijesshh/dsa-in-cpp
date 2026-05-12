@@ -3,8 +3,7 @@
 ---
 
 > What if a function could solve a problem by solving a smaller version of *the same problem*?
-> That's the idea behind **recursion** — and it's one of the most elegant (and tricky) tools in programming.
-
+> That's the idea behind **recursion** 
 ---
 
 ## 8.1 What is Recursion?
@@ -13,7 +12,7 @@
 
 Two rules every recursive function must follow:
 - It must **call itself** (with a smaller/simpler input).
-- There must be some **base condition that terminates the recursion** — otherwise it runs forever.
+- There must be some **base condition that terminates the recursion** otherwise it runs forever.
 
 ### General Structure
 
@@ -88,7 +87,7 @@ terminate
 
 **Output: `1 2 3`**
 
-> Notice how swapping the order of the `cout` and the recursive call **reverses the output** — this is a key insight into how recursion works.
+> Notice how swapping the order of the `cout` and the recursive call **reverses the output** this is a key insight into how recursion works.
 
 ---
 
@@ -180,17 +179,3 @@ When this runs, here is what the **memory** looks like:
 > ➕ Added: A recurrence relation expresses the time taken by a recursive function in terms of the time taken by smaller inputs. For example, for `fun(n)` that makes one recursive call to `fun(n-1)` and does O(1) other work:
 > `T(n) = T(n-1) + 1`, with base case `T(0) = 1`
 > Solving this gives **T(n) = O(n)** — matching what we observed from the stack diagram above.
-
----
-
-## 📚 Quick Recap
-
-- A **recursive function** is one that calls itself.
-- Every recursive function needs a **base condition** to terminate — without it, you get infinite recursion (stack overflow).
-- Swapping the position of the recursive call vs. the work (e.g., `cout`) **changes the output order** — this is the calling vs. returning phase at work.
-- **Recursion has two phases:** calling (ascending) phase and returning (descending) phase. A loop only has a forward phase.
-- Recursion uses the **call stack** — each recursive call creates an activation record on the stack.
-- A recursive function called `n+1` times uses **O(n) space** on the stack — making recursive functions **memory consuming**.
-- The time complexity of a recursive function is analyzed using a **recurrence relation**.
-
----
