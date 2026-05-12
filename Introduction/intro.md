@@ -1,0 +1,476 @@
+# Data Structures and Algorithms
+
+---
+
+## Why Does Any of This Matter?
+
+> Why can your computer open a 500MB PDF in seconds? Why can a search engine find results from billions of pages almost instantly?
+> The answer lies in how data is **organized and managed in memory** — and that's exactly what Data Structures & Algorithms is about.
+
+---
+
+## 1. Core Terminology
+
+**Data structure** means the arrangement of a collection of data items so that they can be utilized effectively. It is the **management of data on the main memory**.
+
+### Real-World Analogy
+
+Let's assume we have to access a file named `dsa.pdf`. When we double-click on the file to open it, the file is copied from disk to the main memory — and the management of data on that main memory is **data structure**.
+
+> The management of data on the **disk** is called a **database**.
+
+---
+
+## 2. Related Concepts: Data Warehouse & Big Data
+
+### Data Warehouse
+
+We store large amounts of old data across multiple disks (an array of disks) — this storage is called a **data warehouse**. That data is very helpful for generating insights by analyzing it, and the algorithms written to analyze them are called **data mining algorithms**.
+
+### Big Data
+
+With the boom of the internet, large amounts of data are being generated day by day which can't be handled by traditional databases. This large data is called **big data**.
+
+---
+
+## 3. Stack vs Heap Memory
+
+> How does your program actually use RAM? Why do some variables disappear after a function ends, but others stick around?
+
+Stack and heap are both parts of memory — **stack is static memory** whereas **heap is dynamic memory**.
+
+---
+
+### 3.1 Static Memory Allocation (Stack)
+
+First, we need to know that memory is divided into different parts — this is called **segmentation of memory**, and each segment has a maximum of **64KB** of storage.
+
+A segment is further divided into three parts:
+- **Code section**
+- **Stack section**
+- **Heap section**
+
+A program uses main memory by dividing into these different sections.
+
+**How it works:**
+1. The machine code of the program is first loaded into the **code section**.
+2. The CPU then executes the machine code.
+
+#### Example — Single Function
+
+```c
+void main() {
+    int a;
+    float b;
+}
+```
+
+- Assume `int` = 2 bytes, `float` = 4 bytes → total **6 bytes** needed.
+- This memory is allocated in the **stack** for the function — this block is called an **activation record** or **stack frame**.
+- Since the amount of memory required is determined at **compile time**, this is called **static memory allocation**.
+
+#### Example — Multiple Function Calls
+
+```c
+void func2(int i) {
+    int a;
+}
+
+void func1() {
+    int x;
+    func2(x);
+}
+
+void main() {
+    int a;
+    int b;
+    func1();
+}
+```
+
+**Execution flow (step by step):**
+
+1. Machine code is copied to the **code section**.
+2. `main()` starts executing → activation record created for `a` and `b`.
+3. `main()` calls `func1()` → control switches to `func1()` → new activation record created for `x`.
+4. `func1()` calls `func2()` → control switches to `func2()` → new activation record created for `a` and `i`.
+5. `func2()` is now **on the top of the stack**.
+6. `func2()` finishes → its activation record is **deleted**, control returns to `func1()`.
+7. `func1()` finishes → its activation record is **deleted**, control returns to `main()`.
+8. `main()` finishes → its activation record is also **deleted**.
+
+> 📝 **Key takeaway:** Stack works on a **LIFO (Last In, First Out)** mechanism. The size of stack memory is decided by the **compiler automatically**, and it is also **deleted automatically**.
+
+---
+
+### 3.2 Dynamic Memory Allocation (Heap)
+
+> **Heap** means *piling up*. It should be treated as a **resource** — we use it when needed and release it when our work is done.
+
+Key differences from stack:
+- A program can access **stack memory directly**.
+- A program **cannot access heap memory directly** — we access it using a **pointer**.
+
+#### Example — Heap Allocation
+
+```cpp
+void main() {
+    int *p;            // Assume pointer is 2 bytes — memory auto-allocated in stack
+    p = new int[5];    // "new" allocates memory for 5 ints in the heap;
+                       // p stores the starting address of the array
+    delete[] p;        // After work is done, we MUST delete heap memory to avoid memory loss
+    p = NULL;          // Now p points to nothing
+}
+```
+
+> ⚠️ Failing to call `delete[]` after using `new` causes a **memory leak** — heap memory stays reserved even after the program no longer needs it.
+
+---
+
+## 4. Types of Data Structures
+
+There are **2 types** of data structures:
+
+1. **Physical Data Structures** — define how data is actually stored in memory
+2. **Logical Data Structures** — define the discipline/rules for operating on that stored data
+
+---
+
+### 4.1 Physical Data Structures
+
+#### Array
+- A collection of data elements in **contiguous memory locations**.
+- Used when we **know the maximum size** of data elements in advance.
+- Can be created in **stack or heap**.
+
+#### Linked List
+- A dynamic data structure — it is basically a **dynamic structure**.
+- A collection of **nodes**, where each node contains **data** and a **link to the next node**.
+- The length of the list can be **increased or reduced dynamically**.
+- The linked list itself is created in **heap**, and a **head pointer** in the stack points to the heap.
+
+---
+
+### 4.2 Logical Data Structures
+
+| Data Structure | Category |
+|---|---|
+| Stack | Linear |
+| Queue | Linear |
+| Trees | Non-linear |
+| Graphs | Non-linear |
+| Hash Table | Linear / Tabular |
+
+> 📝 Note: The original notes say "Hash tree" but the correct term is **Hash Table** (also called a hash map). A hash table is a tabular data structure that maps keys to values. "Hash tree" is a different, less common structure.
+
+**Physical vs Logical — How they relate:**
+
+- **Physical data structures** are meant for *storing* data.
+- When we want to *operate* on that data (add, sort, search, etc.), the discipline followed for performing those operations is defined by **logical data structures**.
+- Logical data structures are **implemented using** physical data structures.
+
+---
+
+## 5. ADT — Abstract Data Type
+
+> **Abstract** means *hiding internal details*.
+
+A **data type** is defined by:
+- The **representation** of data (how it's stored)
+- The **operations** that can be performed on the data
+
+### Example — The List ADT
+
+```
+List:  8, 3, 9, 4, 6, 10, 12
+Index: 0, 1, 2, 3, 4,  5,  6
+```
+
+To represent this list we need:
+- Space for storing elements
+- A capacity
+
+We can represent this list using **either an array or a linked list** — the internal representation is hidden from the user. That's the "abstract" part.
+
+---
+
+### 5.1 Operations on the List ADT
+
+#### 1. `add(element)` / `append(element)` — Add to end
+
+```
+add(15)
+List:  8, 3, 9, 4, 6, 10, 12, 15
+Index: 0, 1, 2, 3, 4,  5,  6,  7
+```
+
+#### 2. `add(index, element)` / `insert(index, element)` — Insert at position
+
+```
+add(6, 20)
+List:  8, 3, 9, 4, 6, 10, 20, 12, 15
+Index: 0, 1, 2, 3, 4,  5,  6,  7,  8
+```
+
+#### 3. `remove(index)` — Remove at position
+
+```
+remove(6)
+List:  8, 3, 9, 4, 6, 10, 12, 15
+Index: 0, 1, 2, 3, 4,  5,  6,  7
+```
+
+#### 4. `set(index, element)` / `replace(index, element)` — Update at position
+
+```
+set(3, 25)
+List:  8, 3, 9, 25, 6, 10, 12, 15
+Index: 0, 1, 2,  3, 4,  5,  6,  7
+```
+
+#### 5. `get(index)` — Retrieve element at position
+
+```
+get(7)
+Output → 15
+```
+
+#### 6. `search(key)` / `contains(key)` — Find element
+
+```
+search(9)
+Output → 2   (returns the index)
+```
+
+#### 7. `sort()` — Sort the list
+
+---
+
+## 📚 Quick Recap
+
+- **Data structure** = managing data in **main memory**; **database** = managing data on **disk**.
+- **Data warehouse** stores large amounts of historical data; **data mining algorithms** extract insights from it.
+- **Big data** refers to data volumes too large for traditional databases to handle.
+- **Stack memory** is static — size determined at compile time, managed automatically via activation records (LIFO).
+- **Heap memory** is dynamic — accessed via **pointers**, must be manually released with `delete[]` to avoid memory leaks.
+- **Physical data structures** (`array`, `linked list`) define *how* data is stored.
+- **Logical data structures** (`stack`, `queue`, `tree`, `graph`, `hash table`) define *how* data is operated on.
+- **ADT (Abstract Data Type)** hides implementation details — defined only by its data representation and the operations it supports.
+- A **List ADT** supports: `add`, `insert`, `remove`, `set`, `get`, `search`, and `sort`.
+
+---
+
+# 6. Time and Space Complexity
+
+---
+
+> Why does the same task — say, searching a list — feel instant with 10 items but sluggish with 10 million?
+> The answer is **time complexity** — and understanding it lets you predict, measure, and improve the efficiency of any algorithm before writing a single line of production code.
+
+---
+
+## 6.1 Time Complexity
+
+**Time complexity** means how much time is required to complete a task, and it depends on the **procedure** (the steps the algorithm follows).
+
+We can analyze time complexity in two ways:
+- By analyzing the **procedure / logic**
+- By analyzing the **code**
+
+---
+
+## 6.2 Analyzing Time Complexity by Procedure
+
+### O(n) — Linear Time
+
+Take an array of `n` elements. If we have to search through it, we have to go through every element — so the time complexity is **order of n**, written as **O(n)**.
+
+---
+
+### O(n²) — Quadratic Time
+
+Imagine an array of `n` elements. When we are at index `0`, we process from index `0` to `n-1`. When we are at index `1`, we process from `1` to `n-1`. We continue this until we reach index `n-1`.
+
+So the total work done is:
+
+```
+(n-1) + (n-2) + ... + 3 + 2 + 1
+```
+
+> 📝 Note: The correct formula for this sum is **n(n-1)/2**, not n(n+1)/2 as written in the original. The sum 1 + 2 + ... + (n-1) = n(n-1)/2. Either way, it simplifies to a degree-2 polynomial, so the final time complexity **O(n²) is correct**.
+
+This gives us a degree-2 polynomial → **Time complexity: O(n²)**
+
+In code, this corresponds to a **nested loop**:
+
+```c
+for (i = 0; i < n; i++) {
+    for (j = i + 1; j < n; j++) {
+        // process
+    }
+}
+```
+
+---
+
+### O(log n) — Logarithmic Time
+
+Imagine we are processing an array of `n` elements, and each time we only process up to the **midpoint**, then the midpoint of that, and so on — repeating until only index `0` is left.
+
+The work done halves each time:
+
+```
+n → n/2 → n/4 → ... → 1
+```
+
+**Time complexity: O(log₂ n)**
+
+In code:
+
+```c
+for (i = n; i > 1; i = i/2) { }
+```
+
+Or equivalently:
+
+```c
+i = n;
+while (i > 1) {
+    i = i / 2;
+}
+```
+
+> 📝 Note: The original had `i/2` as the loop increment without the assignment. The correct syntax is `i = i/2` — without the assignment, `i` never actually changes and you get an infinite loop. Fixed above.
+
+---
+
+### Matrix Cases
+
+| Scenario | Time Complexity |
+|---|---|
+| Processing an entire matrix | O(n²) |
+| Processing only a single row or column | O(n) |
+
+---
+
+### O(m + n) — Mixed Structures
+
+For an array of linked lists where there are `m` array slots and `n` nodes in each linked list:
+
+- If we traverse **everything** (array + all linked lists): **O(m + n)**
+- If we only traverse the **linked lists**: **O(n)**
+
+---
+
+## 6.3 Analyzing Time Complexity by Code
+
+We assume every **simple statement** takes **unit time (1)**.
+
+Simple statements include:
+- Arithmetic operations
+- Assignment operations
+- Conditional operations
+
+---
+
+### Example 1 — Swap Function → O(1)
+
+```c
+void swap(int x, int y) {
+    int t;  // 1
+    t = x;  // 1
+    t = y;  // 1
+    y = t;  // 1
+}
+```
+
+- Time function: **f(n) = 4** → degree = 0
+- **Time complexity: O(1)** (constant — doesn't depend on input size)
+
+---
+
+### Example 2 — Sum Function → O(n)
+
+```c
+int sum(int a[], int n) {
+    int s, i;
+    for (i = 0; i < n; i++) {  // loop runs n+1 times (includes final condition check)
+        s = s + a[i];
+    }
+    return s;  // 1
+}
+```
+
+> 📝 Note: The original had `return s=1` which is a typo — that would assign `1` to `s` and return it, giving the wrong result. Corrected to `return s`.
+
+- The `for` loop condition is checked `n+1` times, body runs `n` times.
+- **Time complexity: O(n)**
+
+---
+
+### Example 3 — Matrix Addition → O(n²)
+
+```c
+for (i = 0; i < n; i++) {         // n+1 times
+    for (j = 0; j < n; j++) {     // (n+1) * n times
+        m[i][j] = a[i][j] + b[i][j];  // n * n times
+    }
+}
+```
+
+- Outer loop: `n+1` checks
+- Inner loop: runs `n` times for each outer iteration → `n × n = n²`
+- **Time complexity: O(n²)**
+
+---
+
+### Example 4 — Function Call → O(n)
+
+```c
+func1() {
+    for (i = 0; i < n; i++) { }
+}
+
+main() {
+    func1();
+}
+```
+
+- `main()` calls `func1()`, which runs a loop of `n` iterations.
+- **Time complexity: O(n)**
+
+---
+
+## 6.4 Space Complexity
+
+**Space complexity** is concerned with the **space (memory) required to store elements**.
+
+Key point:
+- It does **not** calculate the exact memory size in bytes.
+- It only calculates the **number of units of space** used relative to input size.
+
+### Example
+
+- For an array of `n` elements → **Space complexity: O(n)**
+- For a fixed number of variables regardless of input → **Space complexity: O(1)**
+
+---
+
+## 📚 Quick Recap
+
+- **Time complexity** measures how an algorithm's running time grows with input size — it depends on the procedure used.
+- We can derive it by analyzing the **logic** (procedure) or by counting **statement executions** in code.
+- Every simple statement (arithmetic, assignment, conditional) is assumed to take **1 unit of time**.
+- Common complexities from best to worst:
+
+  | Complexity | Name | Example |
+  |---|---|---|
+  | O(1) | Constant | Swap two variables |
+  | O(log n) | Logarithmic | Halving an array repeatedly |
+  | O(n) | Linear | Searching an array |
+  | O(n²) | Quadratic | Nested loops over an array |
+
+- **Space complexity** measures how much storage space an algorithm uses relative to input size — it counts **units of space**, not bytes.
+- For an array of `n` elements, space complexity is **O(n)**.
+
+---
