@@ -31,6 +31,7 @@ int main()
 
 
     - Total function calls: 1 + 2 + 4 + 8 = 15 calls
+                    2^0+2^1+2^2+2^3=2^(3+1)-1 (it is geometric progession)
     - Time Complexity: O(2^n) - EXPONENTIAL
 
     - Space Complexity: O(n)
