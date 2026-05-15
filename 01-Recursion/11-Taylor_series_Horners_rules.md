@@ -1,4 +1,4 @@
-# 8.9 Taylor Series Using Horner's Rule
+# Taylor Series Using Horner's Rule
 
 *Computing e^x term by term seems straightforward but how many multiplications does it actually take? And can we do better?*
 
