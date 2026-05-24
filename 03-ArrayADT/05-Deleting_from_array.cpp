@@ -14,19 +14,19 @@ int main()
     int arr[] = {1, 2, 9, 3, 4, 5};
     int length = 6;
     display(arr, length);
-    // to delet element of index 2
-    //first check if index lies in our array or not
-    if(index<length)
-    {
     int index = 2;
-    for (int i = index; i < length - 1; i++)
+    // to delet element of index 2
+    // first check if index lies in our array or not
+    if (index < length && index >= 0)
     {
-        arr[i] = arr[i + 1];
+        for (int i = index; i < length - 1; i++)
+        {
+            arr[i] = arr[i + 1];
+        }
+        length--;
+        display(arr, length);
     }
-    length--;
-    display(arr, length);
+    else
+        cout << "Index out of range";
 }
-else
-cout<<"Index out of range";
-}
-//time complexity is O(n)
+// time complexity is O(n)
