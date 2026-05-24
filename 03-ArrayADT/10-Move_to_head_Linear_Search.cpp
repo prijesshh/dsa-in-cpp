@@ -1,16 +1,28 @@
+// we may search the key again so to reduce time complexity we move the searched key to 0 index from i
 #include <iostream>
 using namespace std;
+void swap(int &x, int &y)
+{
+    int t;
+    t = x;
+    x = y;
+    y = t;
+}
 int main()
 {
     int arr[] = {5, 4, 3, 2, 1};
-    // to find key 6
-    int key = 6;
+    // to find key 4
+    int key = 4;
     int index = -1;
     int length = sizeof(arr) / sizeof(arr[0]);
     for (int i = 0; i < length; i++)
     {
         if (key == arr[i])
-            index = i;
+        {
+            swap(arr[i], arr[0]);
+             index = 0;
+             break;
+        }
     }
     if (index != -1)
         cout << "The element is at index " << index << endl;
@@ -18,10 +30,3 @@ int main()
         cout << "There is no such element present on array" << endl;
     return 0;
 }
-/*
-time complexity:
-minmum is O(n^0)
-maximim is O(n)
-average time complexity=1+2+3+....+n/n
-=(n+1)/2
-*/
