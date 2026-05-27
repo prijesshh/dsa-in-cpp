@@ -2,7 +2,7 @@
 using namespace std;
 int binary(int arr[], int key, int high, int low, int mid)
 {
-    while (high > low)
+    while (high >= low)
     {
         mid = (high + low) / 2; // here we take the floor value ie 5.5->5
         if (key == arr[mid])
