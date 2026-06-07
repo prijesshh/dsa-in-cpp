@@ -16,7 +16,7 @@ int main()
 
             cout << A[i] << " is duplicate " << (j - i) << " times" << endl;
 
-            i = j;
+            i = j;//helps to skip rem duplicated elements
         }
     }
 }
